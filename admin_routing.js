@@ -5,7 +5,7 @@ const con_info={
     port: 3306,
     user: "root",
     password: "mysql",
-    database: "EXPRESS_SHOP"
+    database: "MY_SHOP"
 }
 
 const express=require("express");
@@ -56,9 +56,22 @@ app.get("/admin/product/list/:page",async (req,res)=>{
 
 })
 
-app.get("/admin/mem/read/:id/form",(req,res)=>{
-    console.log(req.params["id"]);
-    res.send(`<h1>${req.params.id}확인</h1>`)
+app.get("/admin/mem/read/:id/form",async (req,res)=>{
+    let sql=`SELECT * FROM MEMBER WHERE ID=?`;
+    let conn= await mysqlConn();
+    let result=queryResult(conn,sql,req.params.id);
+    let data= fsData("./public/admin/member/member_detail/mem_detail.html");
+    result= await result;
+    data = await data;
+    res.write(
+        `<script> 
+            const SELECT_ID_MEMBER = ${JSON.stringify(result)};
+            console.log(SELECT_ID_MEMBER)
+        </script>`
+    );
+    res.write(data)
+    res.send()
+    conn.end((e)=>{});
 })
 
 
