@@ -15,9 +15,6 @@ const app=express();
 app.use(express.static("public"))
 //app.use() 미들웨어 : 요청이 먼저 검사를 실시하고 요청으로 보내는 것 [검문소] 
 //모든 정적리소스(css,img,js 등)가 요청이 들어오면 public 폴더에서 찾아서 응답해준다.
-
-
-
 app.get("/admin/",(req,res)=>{
     res.sendFile(__dirname+"/admin/index.html");
 })
@@ -26,7 +23,7 @@ app.get("/admin/mem/list/:page",(req,res)=>{
     conn.connect((e)=>{
         if(e)throw new Error(e.message);
         conn.query("SELECT * FROM MEMBER",(e,result)=>{
-            fs.readFile("./public/admin/mem_list.html",(e,data)=>{
+            fs.readFile("./public/admin/member/mem_list.html",(e,data)=>{
                 if(e){console.log(e);}
                 res.write(`
                         <script>
@@ -40,20 +37,11 @@ app.get("/admin/mem/list/:page",(req,res)=>{
         })
     })
 })
-app.get("/admin/mem/read/:id/form",(req,res)=>{
-    console.log(req.params["id"]);
-    res.send(`<h1>${req.params.id}확인</h1>`)
-})
-
-
-
-//admin/product/list/:page 요청이 동적 리소스
-//./public/admin/product_list.html 정적 리소스
 app.get("/admin/product/list/:page",async (req,res)=>{
     let sql="SELECT * FROM PRODUCT";
     let conn = await mysqlConn();
     let result = queryResult(conn,sql);
-    let data = fsData("./public/admin/product_list.html");
+    let data = fsData("./public/admin/product/product_list.html");
     result = await result; //동시에 데이터를 각각 가져오고 이 때 await한다. (동기화)
     data = await data; 
     res.write(
@@ -66,15 +54,15 @@ app.get("/admin/product/list/:page",async (req,res)=>{
     res.send()
     conn.end((e)=>{});
 
-    // fs.readFile("./public/admin/product_list.html",async (e,data)=>{
-    //     if(e){console.log(e.message);}
-    //     let sql="SELECT * FROM PRODUCT";
-    //     const conn = await mysqlConn();
-    //     const result = await queryResult(conn,sql);
-    //     console.log(result);
-    //     console.log("async 성공");
-    // })
 })
+
+app.get("/admin/mem/read/:id/form",(req,res)=>{
+    console.log(req.params["id"]);
+    res.send(`<h1>${req.params.id}확인</h1>`)
+})
+
+
+
 app.listen(1234);
 
 
