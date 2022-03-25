@@ -1,0 +1,10 @@
+body{
+    margin:0px;
+    background-color: rgb(214, 232, 226);
+}
+main>.memDetail{
+    display: flex;
+    width: 600px;
+    padding: 5px;
+    flex-direction: column;
+}

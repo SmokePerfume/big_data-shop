@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/member/member_detail/mem_detail.css">
+    <script src="/admin/member/member_detail/mem_detail.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <iframe src="/admin/header_nav.html" width="100%" frameborder="0" scrolling="no"></iframe>
+    </header>
+    <main>
+        <div id="memDetail"  class="memDetail">
+            <form class="memClForm" name="memForm">
+                <p> ID : <input type="text" name="ID" value="아이디"></p>
+                <p> PHONE : <input type="text" name="PHONE" value="핸드폰"></p>
+                <p> EMAIL : <input type="email" name="EMAIL" value="이메일"></p>
+                <p> NAME : <input type="text" name="NAME" value="이름"></p>
+                <p> ADDRESS : <input type="text" name="ADDRESS" value="주소"></p>
+                <p> ADDRESS_DETAIL : <input type="text" name="ADDRESS_DETAIL" value="상세주소"></p>
+                <p> BIRTH : <input type="text" name="BIRTH" value="생일"></p>
+            </form>
+        </div>
+    </main>
+<script>
+SELECT_ID_MEMBER.forEach((item)=>{
+    for(let key in item){
+        const inputMem=memForm[key];
+        inputMem.value=item[key]
+    }
+})
+</script>
+    <pre>
+        MEMBER
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| ID             | varchar(255) | NO   | PRI | NULL    |       |
+| PHONE          | varchar(255) | NO   | UNI | NULL    |       |
+| EMAIL          | varchar(255) | NO   | UNI | NULL    |       |
+| NAME           | varchar(255) | NO   |     | NULL    |       |
+| ADDRESS        | varchar(255) | YES  |     | NULL    |       |
+| ADDRESS_DETAIL | varchar(255) | YES  |     | NULL    |       |
+| BIRTH          | date         | NO   |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+    </pre>
+</body>
+</html>
