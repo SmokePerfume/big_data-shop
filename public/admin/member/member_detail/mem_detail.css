@@ -1,12 +1,37 @@
+main>.memDetail>.memClForm>div{
+    height: 70px;
+    margin: 15px;
+    
+}
+main>.memDetail>.memClForm>div>.formH3{
+    font-size: 20px;
+    margin: 20px 0px 5px 0px;
+}
+
+main>.memDetail>.memClForm>div>span{
+    display: inline-block;
+    height: 30px;
+    margin: 0px;
+}
+main>.memDetail>.memClForm>div>span>input{
+    height: 40px;
+    font-size: 18px;
+}
+
 body{
     margin:0px;
     background-color: rgb(214, 232, 226);
 }
 
-main>.memDetail>.memClForm{
+main{
     display: flex;
+    justify-content: center;
+}
+
+main>.memDetail{
+    display: flex;
+    width: 430px;
     padding: 5px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
+

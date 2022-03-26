@@ -15,38 +15,30 @@
     <main>
         <div id="memDetail"  class="memDetail">
             <form class="memClForm" name="memForm">
-                <div><h3>아이디</h3>
-                    <span><input type="text" name="ID" value="아이디"></span>
+                <div><h3 class ="formH3">아이디</h3>
+                    <span><input type="text" name="ID" value="아이디" maxlength="15"></span>
                 </div>
-                <div><h3>핸드폰 번호</h3>
-                    <span><input type="text" name="PHONE" value="핸드폰"></span>
+                <div><h3 class ="formH3">핸드폰 번호</h3>
+                    <span><input type="text" name="PHONE" value="핸드폰" maxlength="15"></span>
                 </div>
-                <div><h3>이메일</h3>
+                <div><h3 class ="formH3">이메일</h3>
                     <span><input type="email" name="EMAIL" value="이메일"></span>
                 </div>
-                <div><h3>이름</h3>
+                <div><h3 class ="formH3">이름</h3>
                     <span><input type="text" name="NAME" value="이름"></span>
                 </div>
-                <div><h3>주소</h3>
+                <div><h3 class ="formH3">주소</h3>
                     <span><input type="text" name="ADDRESS" value="주소"></span>
                 </div>
-                <div><h3>상세 주소</h3>
+                <div><h3 class ="formH3">상세 주소</h3>
                     <span><input type="text" name="ADDRESS_DETAIL" value="상세주소"></span>
                 </div>
-                <div><h3>생일</h3>
+                <div><h3 class ="formH3">생일</h3>
                     <span><input type="text" name="BIRTH" value="생일"></span>
                 </div>
             </form>
         </div>
     </main>
-<script>
-SELECT_ID_MEMBER.forEach((item)=>{
-    for(let key in item){
-        const inputMem=memForm[key];
-        inputMem.value=item[key]
-    }
-})
-</script>
     <pre>
         MEMBER
 +----------------+--------------+------+-----+---------+-------+
