@@ -1,11 +1,13 @@
 const fs=require("fs");
 const mysql=require("mysql");
+const res = require("express/lib/response");
 const con_info={
     host: "localhost",
     port: 3306,
     user: "root",
     password: "mysql",
-    database: "MY_SHOP"
+    database: "MY_SHOP",
+    dateStrings: "date"
 }
 
 const express=require("express");
@@ -58,7 +60,6 @@ app.get("/admin/product/list/:page",async (req,res)=>{
     conn.end((e)=>{});
 
 })
-
 app.get("/admin/mem/read/:id/form",async (req,res)=>{
     let sql=`SELECT * FROM MEMBER WHERE ID=?`;
     let conn= await mysqlConn();
@@ -77,7 +78,29 @@ app.get("/admin/mem/read/:id/form",async (req,res)=>{
     conn.end((e)=>{});
 })
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.post("/admin/mem/update/",async (req,res)=>{
+    let conn = await mysqlConn();
+    let sqlUpdateMem=`UPDATE MEMBER SET PHONE=?, EMAIL=?, NAME=?, ADDRESS=?,ADDRESS_DETAIL=?,BIRTH=? WHERE ID=?`;
+    const rb=req.body;
+    const params=[rb.PHONE,rb.EMAIL,rb.NAME,rb.ADDRESS,rb.ADDRESS_DETAIL,rb.BIRTH,rb.ID];
+    let resultUpd = queryResult(conn,sqlUpdateMem,params);
+    resultUpd = await resultUpd; 
+    conn.end((e)=>{});
+    res.send(`<script>
+        window.location.href='/admin/mem/list/1';</script>`)
+})
 
+
+app.delete("/admin/mem/delete/:id",async (req,res)=>{
+    let conn = await mysqlConn();
+    let sqldeleteMem=`DELETE FROM MEMBER WHERE ID=?`;
+    let resultDel = queryResult(conn,sqldeleteMem,req.params.id);
+    resultDel = await resultDel;
+    res.send({delete:1,msg:"삭제성공"})
+    conn.end((e)=>{})
+})
 
 app.listen(1234);
 

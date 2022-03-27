@@ -2,3 +2,20 @@ body{
     margin:0px;
     background-color: rgb(214, 232, 226);
 }
+.mem_table{
+    box-sizing: border-box;
+    margin: 20px 10px;
+    width: -webkit-calc(100% - 20px);
+}
+.table_Btn{
+    background-color: rgba(254, 255, 191,0.5);
+    border: 1px solid  rgba(235, 235, 235,0.5);   
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+.table_Btn:hover{
+    background-color: rgba(254, 255, 191,0.7);
+    box-shadow: 0px 0px 20px rgb(56, 56, 22);
+
+}

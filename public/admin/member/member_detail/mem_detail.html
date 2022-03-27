@@ -14,9 +14,9 @@
     </header>
     <main>
         <div id="memDetail"  class="memDetail">
-            <form class="memClForm" name="memForm">
+            <form class="memClForm" id="memForm" action="/admin/mem/update/" method="POST">
                 <div><h3 class ="formH3">아이디</h3>
-                    <span><input type="text" name="ID" value="아이디" disabled></span>
+                    <span><input type="text" name="ID" value="아이디" readonly></span>
                 </div>
                 <div><h3 class ="formH3">핸드폰 번호</h3>
                     <span><input type="text" name="PHONE" value="핸드폰" maxlength="15"></span>
@@ -39,26 +39,12 @@
                 <div>
                     <p></p>
                     <p></p>
-                    <button type="button" id="updateBtn" class="detail_btn">수정하기</button>
+                    <button type="submit" id="updateBtn" class="detail_btn">수정하기</button>
                     <p></p>
                     <button type="button" id="cancelBtn" class="detail_btn">뒤로가기</button>
                 </div>
             </form>
         </div>
     </main>
-    <pre>
-        MEMBER
-+----------------+--------------+------+-----+---------+-------+
-| Field          | Type         | Null | Key | Default | Extra |
-+----------------+--------------+------+-----+---------+-------+
-| ID             | varchar(255) | NO   | PRI | NULL    |       |
-| PHONE          | varchar(255) | NO   | UNI | NULL    |       |
-| EMAIL          | varchar(255) | NO   | UNI | NULL    |       |
-| NAME           | varchar(255) | NO   |     | NULL    |       |
-| ADDRESS        | varchar(255) | YES  |     | NULL    |       |
-| ADDRESS_DETAIL | varchar(255) | YES  |     | NULL    |       |
-| BIRTH          | date         | NO   |     | NULL    |       |
-+----------------+--------------+------+-----+---------+-------+
-    </pre>
 </body>
 </html>

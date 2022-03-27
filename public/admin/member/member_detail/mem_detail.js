@@ -1,5 +1,5 @@
 const cancelBtn = document.getElementById("cancelBtn")
-
+const updateBtn = document.getElementById("updateBtn")
 cancelBtn.addEventListener("click",()=>{
     window.location.href='/admin/mem/list/1';
 })
