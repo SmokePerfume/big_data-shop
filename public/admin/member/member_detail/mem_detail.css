@@ -1,26 +1,6 @@
-main>.memDetail>.memClForm>div{
-    height: 70px;
-    margin: 15px;
-    
-}
-main>.memDetail>.memClForm>div>.formH3{
-    font-size: 20px;
-    margin: 20px 0px 5px 0px;
-}
-
-main>.memDetail>.memClForm>div>span{
-    display: inline-block;
-    height: 30px;
-    margin: 0px;
-}
-main>.memDetail>.memClForm>div>span>input{
-    height: 40px;
-    font-size: 18px;
-}
-
 body{
     margin:0px;
-    background-color: rgb(214, 232, 226);
+    background-color: rgba(235, 235, 235,0.5);   
 }
 
 main{
@@ -30,8 +10,47 @@ main{
 
 main>.memDetail{
     display: flex;
-    width: 430px;
-    padding: 5px;
-    flex-direction: column;
+    max-width: 400px;
 }
 
+main>.memDetail>.memClForm{
+    width: 100%;
+}
+main>.memDetail>.memClForm>div{
+    height: 100px;
+}
+
+main>.memDetail>.memClForm>div>.formH3{
+    font-size: 20px;
+    margin: 10px 0px 5px;
+}
+
+main>.memDetail>.memClForm>div>span{
+    display: inline-block;
+    height: 30px;
+}
+
+main>.memDetail>.memClForm>div>span>input{
+    height: 50px;
+    width: 400px;
+    font-size: 18px;
+}
+
+.detail_btn{
+    width: 100%;
+    padding: 15px 0 15px;
+    font-size: 22px;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: #fff;
+    border: 1px solid  rgba(235, 235, 235,0.5);   
+    border-radius: 10px 10px;
+    background-color: rgba(54, 54, 54, 0.5);
+}
+.detail_btn:hover{
+    background-color: rgba(54, 54, 54, 0.7);
+    box-shadow: 0px 0px 20px rgb(56, 56, 22);
+
+}
