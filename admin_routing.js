@@ -1,6 +1,5 @@
 const fs=require("fs");
 const mysql=require("mysql");
-const res = require("express/lib/response");
 const con_info={
     host: "localhost",
     port: 3306,
@@ -20,8 +19,8 @@ app.use(express.static("public"))
 app.get("/admin/",(req,res)=>{
     res.sendFile(__dirname+"/admin/index.html");
 })
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"/public/admin/index.html");
+app.get("/customer/",(req,res)=>{
+    res.sendFile(__dirname+"/customer/index.html");
 })
 app.get("/admin/mem/list/:page",(req,res)=>{
     const conn=mysql.createConnection(con_info);
@@ -58,7 +57,6 @@ app.get("/admin/product/list/:page",async (req,res)=>{
     res.write(data)
     res.send()
     conn.end((e)=>{});
-
 })
 app.get("/admin/mem/read/:id/form",async (req,res)=>{
     let sql=`SELECT * FROM MEMBER WHERE ID=?`;

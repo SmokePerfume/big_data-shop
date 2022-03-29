@@ -19,7 +19,10 @@ function deleteMem(del_id){
     let url=`/admin/mem/delete/${del_id}`;
     fetch(url,{method:"DELETE"})
     .then((res)=>{return res.json()})
-    .then((delete_obj)=>{alert(delete_obj["delete"]+":"+delete_obj["msg"])})
+    .then((delete_obj)=>{
+        alert("상태 번호"+delete_obj["delete"]+" : "+delete_obj["msg"]); 
+        window.location.href='/admin/mem/list/1';
+    })
 }
 
 // mem_del.onsubmit=(e)=>{
