@@ -8,12 +8,13 @@ const con_info={
     database: "MY_SHOP",
     dateStrings: "date"
 }
-
 const express=require("express");
 const { log } = require("console");
 const { resolve } = require("path");
 const app=express(); 
 app.use(express.static("public"))
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 //app.use() 미들웨어 : 요청이 먼저 검사를 실시하고 요청으로 보내는 것 [검문소] 
 //모든 정적리소스(css,img,js 등)가 요청이 들어오면 public 폴더에서 찾아서 응답해준다.
 app.get("/admin/",(req,res)=>{
@@ -26,6 +27,7 @@ app.get("/",(req,res)=>{
     console.log(__dirname);
     res.sendFile(__dirname+"/public/customer/index.html");
 })
+//////////////멤버///////////////
 app.get("/admin/mem/list/:page",(req,res)=>{
     const conn=mysql.createConnection(con_info);
     conn.connect((e)=>{
@@ -45,23 +47,6 @@ app.get("/admin/mem/list/:page",(req,res)=>{
         })
     })
 })
-app.get("/admin/product/list/:page",async (req,res)=>{
-    let sql="SELECT * FROM PRODUCT";
-    let conn = await mysqlConn();
-    let result = queryResult(conn,sql);
-    let data = fsData("./public/admin/product/product_list.html");
-    result = await result; //동시에 데이터를 각각 가져오고 이 때 await한다. (동기화)
-    data = await data; 
-    res.write(
-        `<script>
-            const ITEM_LIST=${JSON.stringify(result)};
-            console.log(ITEM_LIST);
-        </script>`
-    )
-    res.write(data)
-    res.send()
-    conn.end((e)=>{});
-})
 app.get("/admin/mem/read/:id/form",async (req,res)=>{
     let sql=`SELECT * FROM MEMBER WHERE ID=?`;
     let conn= await mysqlConn();
@@ -79,9 +64,6 @@ app.get("/admin/mem/read/:id/form",async (req,res)=>{
     res.send()
     conn.end((e)=>{});
 })
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 app.put("/admin/mem/update/:id",async (req,res)=>{
     let conn = await mysqlConn();
     let sqlUpdateMem=`UPDATE MEMBER SET PHONE=?, EMAIL=?, NAME=?, ADDRESS=?,ADDRESS_DETAIL=?,BIRTH=? WHERE ID=?`;
@@ -92,8 +74,6 @@ app.put("/admin/mem/update/:id",async (req,res)=>{
     conn.end((e)=>{});
     res.send({update:1,msg:"수정성공"})
 })
-
-
 app.delete("/admin/mem/delete/:id",async (req,res)=>{
     let conn = await mysqlConn();
     let sqldeleteMem=`DELETE FROM MEMBER WHERE ID=?`;
@@ -103,7 +83,28 @@ app.delete("/admin/mem/delete/:id",async (req,res)=>{
     conn.end((e)=>{})
 })
 
+//////////////상품///////////////
+app.get("/admin/product/list/:page",async (req,res)=>{
+    let sql="SELECT * FROM PRODUCT";
+    let conn = await mysqlConn();
+    let result = queryResult(conn,sql);
+    let data = fsData("./public/admin/product/product_list.html");
+    result = await result;
+    data = await data; 
+    res.write(
+        `<script>
+            const ITEM_LIST=${JSON.stringify(result)};
+            console.log(ITEM_LIST);
+        </script>`
+    )
+    res.write(data)
+    res.send()
+    conn.end((e)=>{});
+})
 app.listen(1234);
+
+
+
 
 
 function fsData(path){
