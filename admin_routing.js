@@ -78,16 +78,15 @@ app.get("/admin/mem/read/:id/form",async (req,res)=>{
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.post("/admin/mem/update/",async (req,res)=>{
+app.put("/admin/mem/update/:id",async (req,res)=>{
     let conn = await mysqlConn();
     let sqlUpdateMem=`UPDATE MEMBER SET PHONE=?, EMAIL=?, NAME=?, ADDRESS=?,ADDRESS_DETAIL=?,BIRTH=? WHERE ID=?`;
     const rb=req.body;
-    const params=[rb.PHONE,rb.EMAIL,rb.NAME,rb.ADDRESS,rb.ADDRESS_DETAIL,rb.BIRTH,rb.ID];
+    const params=[rb.PHONE,rb.EMAIL,rb.NAME,rb.ADDRESS,rb.ADDRESS_DETAIL,rb.BIRTH,req.params["id"]];
     let resultUpd = queryResult(conn,sqlUpdateMem,params);
     resultUpd = await resultUpd; 
     conn.end((e)=>{});
-    res.send(`<script>
-        window.location.href='/admin/mem/list/1';</script>`)
+    res.send({update:1,msg:"수정성공"})
 })
 
 
