@@ -22,6 +22,10 @@ app.get("/admin/",(req,res)=>{
 app.get("/customer/",(req,res)=>{
     res.sendFile(__dirname+"/customer/index.html");
 })
+app.get("/",(req,res)=>{
+    console.log(__dirname);
+    res.sendFile(__dirname+"/public/customer/index.html");
+})
 app.get("/admin/mem/list/:page",(req,res)=>{
     const conn=mysql.createConnection(con_info);
     conn.connect((e)=>{
