@@ -101,11 +101,34 @@ app.get("/admin/product/list/:page",async (req,res)=>{
     res.send()
     conn.end((e)=>{});
 })
-app.listen(1234);
+
+//////////////보드///////////////
+app.get("/admin/board/list/:page", async(req,res)=>{
+    let boa_sql="SELECT * FROM BOARD"
+    let mem_sql="SELECT * FROM MEMBER";
+    let conn = await mysqlConn();
+    let boa_reslt=queryResult(conn,boa_sql);
+    let mem_reslt=queryResult(conn,mem_sql);
+    let data = fsData("./public/admin/board/board_list.html");
+    boa_reslt= await boa_reslt;
+    mem_reslt= await mem_reslt;
+    data = await data;
+    res.write(`
+            <script>
+            const BOARD_LIST=${JSON.stringify(boa_reslt)}; 
+            const MEMBER_LIST=${JSON.stringify(mem_reslt)};
+            console.log("MYSQL쿼리 결과 BOARD_LIST : ",BOARD_LIST);
+            console.log("MYSQL쿼리 결과 MEMBER_LIST : ",MEMBER_LIST);
+            </script>`);
+    res.write(data)
+    res.send()
+    conn.end((e)=>{});
+})
 
 
-
-
+app.listen(1234,()=>{
+    console.log("http://127.0.0.1:1234 대기중");
+});
 
 function fsData(path){
     return new Promise((resolve)=>{
