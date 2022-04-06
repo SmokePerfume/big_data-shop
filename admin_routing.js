@@ -124,6 +124,25 @@ app.get("/admin/board/list/:page", async(req,res)=>{
     res.send()
     conn.end((e)=>{});
 })
+app.delete("/admin/board/delete/:id",async (req,res)=>{
+    let conn = await mysqlConn();
+    let sqldeleteMem=`DELETE FROM BOARD WHERE NUM=?`;
+    let resultDel = queryResult(conn,sqldeleteMem,req.params.id);
+    resultDel = await resultDel;
+    res.send({delete:1,msg:"삭제성공"})
+    conn.end((e)=>{})
+})
+app.put("/admin/board/update/:num",async (req,res)=>{
+    let conn = await mysqlConn();
+    let sqlUpdateMem=`UPDATE BOARD SET MEMBER_ID=?, TITLE=?, CONTENTS=? WHERE NUM=?`;
+    const rb=req.body;
+    const params=[rb.MEMBER_ID,rb.TITLE,rb.CONTENTS,req.params["num"]];
+    console.log(params);
+    let resultUpd = queryResult(conn,sqlUpdateMem,params);
+    resultUpd = await resultUpd; 
+    conn.end((e)=>{});
+    res.send({update:1,msg:"수정성공"})
+})
 
 
 app.listen(1234,()=>{

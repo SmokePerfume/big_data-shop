@@ -21,8 +21,8 @@ const FormData=function(member_id,title,contents){
 } 
 boardListPrint();
 cateListPrint();
-//글 확인
-async function boardListPrint(){
+//글 확인 (완료)
+function boardListPrint(){
     boardList.innerHTML="";
     BOARD_LIST.forEach((item)=>{
         const item_node=board_clone.cloneNode(true);
@@ -39,7 +39,6 @@ async function boardListPrint(){
         }
     });
 }   
-
 //글 등록
 async function boardListRegist(){        
     const formData=new Object();
@@ -64,33 +63,30 @@ async function boardListRegist(){
     }
 
 };
-
-//업데이트하는 버튼
-async function boardListUpdate(){ 
-    const formData=new Object();
-    //form의 입력요소를 object로 바꾸는 코드
-    for(let key of boardForm){
-        if (key.name && key.value) {
-            formData[key.name]=key.value;
+//업데이트하는 버튼 (완료)
+function boardListUpdate(){ 
+    let url=`/admin/board/update/${boardForm.NUM.value}`;
+    console.log(url);
+    fetch(url,
+        {   method:"PUT",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                MEMBER_ID: boardForm.MEMBER_ID.value,
+                TITLE: boardForm.TITLE.value,
+                CONTENTS: boardForm.CONTENTS.value,
+            })
         }
-    }
-    console.log(formData);
-    const result=await BoardUpdateAjax(formData)
-    //성공하면 이페이지 새로 고침 window.loacation.reload();
-    //성공인데 0이면 (다른 곳에서 삭제) "삭제된 레코드입니다" =>리스트로 이동
-    //실패 -1 "빈 데이터를 확인하거나 통신장애입니다."
-    console.log(result);
-    alert(result.msg);
-    if(result.affectedRows>0){
-        window.location.reload();
-    }else if(result.affectedRows==0){
-        window.location.href="/board/list.do";
-    }else{ //-1일때
-        //데이터 베이스에 오류내역 저장!
-    }
+    )
+    .then((res)=>{return res.json()})
+    .then((update_obj)=>{
+        alert("상태 번호"+update_obj["update"]+" : "+update_obj["msg"]); 
+        window.location.href='/admin/board/list/1';
+    })
 
 }
-
+//아이디 목록 추가 (완료)
 function cateListPrint(){
     MEMBER_LIST.forEach((member)=>{
         const option=document.createElement("option");
@@ -99,19 +95,18 @@ function cateListPrint(){
         boardForm.MEMBER_ID.append(option);
     })
 }
-
-//글 삭제
-async function boardListDelete(){
+//글 삭제 (완료)
+function boardListDelete(){
     const board_num = this.parentNode.querySelector(".NUM").innerText;
-    const result=await BoardDeleteAjax(board_num);
-    alert(result["msg"]);
-    if(result["affectedRows"]>=0){
-        window.location.reload();
-    }
-    console.log(result);
+    let url=`/admin/board/delete/${board_num}`;
+    fetch(url,{method:"DELETE"})
+    .then((res)=>{return res.json()})
+    .then((delete_obj)=>{
+        alert("상태 번호"+delete_obj["delete"]+" : "+delete_obj["msg"]); 
+        window.location.href='/admin/board/list/1';
+    })
 }
-
-//글 선택
+//글 선택 (완료)
 function boardListChioce(){
     boardForm.MEMBER_ID.value=this.parentNode.querySelector(".MEMBER_ID").innerText;
     boardForm.TITLE.value=this.parentNode.querySelector(".TITLE").innerText;
