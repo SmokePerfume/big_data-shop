@@ -44,14 +44,6 @@ main>.main_board_print>.board_list_container{
 header{
     top: 0;
     position: sticky;
-}
-
-
-
-
-
-header{
-    position: relative;
     width: 100%;
     padding-bottom: 80px;
 }
